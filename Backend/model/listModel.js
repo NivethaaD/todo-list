@@ -2,8 +2,7 @@ const mongoose = require('mongoose');
 
 const schema = mongoose.Schema({
     id: {
-        type: Number,
-        required: true
+        type: Number
     },
     content: {
         type: String,

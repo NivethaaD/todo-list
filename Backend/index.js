@@ -1,10 +1,11 @@
 const express=require('express');
 const { default: mongoose } = require('mongoose');
 const listRoute=require('./route/listRoute')
+const cors=require('cors')
 const app=express();
+app.use(cors())
 app.use(express.json());
 app.listen(5000,()=>console.log('connected to host 5000'))
-
 //connecting mongodb
 
 mongoose.connect('mongodb://127.0.0.1:27017/todo')
