@@ -8,21 +8,33 @@ router.post('/create', async (req, res, next) => {
         res.json({
             success: true,
             msg: "List created successfully",
-            list: newList // Optionally send back the created list document
+            list: newList 
         });
     } catch (error) {
-        // Handle any potential errors
-        next(error); // Pass the error to the error-handling middleware
+        next(error); 
     }
 });
 
-// router.get('/delete', (req, res, next) => {
-//     res.send('deleted');
-// });
+router.delete('/delete/:id', async(req, res, next) => {
+    const id= req.params.id;
+    await listModel.findByIdAndDelete(id);
+    res.json({
+        success:true,
+        message:"Deleted the specific list successfully"
+    })
+});
 
-// router.get('/update', (req, res, next) => {
-//     res.send('deleted');
-// });
+router.put('/update/:id', async(req, res, next) => {
+    const id=req.params.id;
+    const body=req.body
+    // console.log(body);
+     const list=await listModel.findByIdAndUpdate(id,body,{new:true});
+    res.json({
+        succes:true,
+        message:"Updated a specific list",
+         list
+    })
+});
 
 router.get('/get',async(req, res, next) => {
     const lists=await listModel.find()
@@ -30,6 +42,16 @@ router.get('/get',async(req, res, next) => {
         succes:true,
         msg:'fetched all list',
         lists
+    })
+});
+
+router.get('/get/:id',async(req, res, next) => {
+    const id=req.params.id;
+    const list=await listModel.findById(id)
+    res.json({
+        succes:true,
+        msg:'fetched specific list',
+        list
     })
 });
 
